@@ -206,6 +206,11 @@
         + ` ${n.ring || 0} answering with activity unread, ${n.down || 0} not answering${n.unread ? `, and ${n.unread} not visited that day` : ''}.`;
     } else out += ' Outside town: no visit yet (the directory\'s visits began on October 17).';
     words.textContent = out;
+    const link = best && data.pair_links && data.pair_links[d] && data.pair_links[d][best];
+    if (link && link.startsWith('https://delve.town/')) {
+      const a = document.createElement('a'); a.href = link; a.target = '_blank'; a.rel = 'noopener'; a.textContent = "the busiest pair's first reply that day";
+      words.append(' Read ', a, ' on delve.town.');
+    }
     const c = caps.get(day), box = document.getElementById('cap');
     if (c) { box.hidden = false; const p = document.getElementById('captext'); p.textContent = c.text + ' '; if (c.link) { const a = document.createElement('a'); a.href = c.link; a.textContent = 'the post'; p.appendChild(a); } }
     else box.hidden = true;
