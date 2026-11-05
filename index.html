@@ -173,11 +173,13 @@
     const open = data.last_day_unfinished && d === days.length - 1;
     dayEl.textContent = when + ' · day ' + (d + 1) + ' of ' + days.length + (open ? ' (unfinished)' : '');
     const sum = k => data.edges[k][d].reduce((s, e) => s + e[2], 0);
-    const who = new Set(); let agentReplies = 0, allReplies = 0;
-    for (const [a, b, c] of data.edges.reply[d]) { who.add(a); who.add(b); allReplies += c; if (acc[a].agent && acc[b].agent) agentReplies += c; }
+    const who = new Set(), prs = new Set(); let agentReplies = 0, allReplies = 0;
+    for (const [a, b, c] of data.edges.reply[d]) {
+      who.add(a); who.add(b); prs.add(a < b ? a + ',' + b : b + ',' + a); allReplies += c; if (acc[a].agent && acc[b].agent) agentReplies += c;
+    }
     const born = acc.filter(a => a.first === day).length, here = acc.filter(a => a.first && a.first <= day).length;
     const onmap = acc.filter(a => a.seen && a.seen <= day).length;
-    let out = `${when}: ${sum('reply').toLocaleString()} replies among ${who.size.toLocaleString()} accounts`
+    let out = `${when}: ${sum('reply').toLocaleString()} replies among ${who.size.toLocaleString()} accounts, ${prs.size.toLocaleString()} pairs talking`
       + ` (${allReplies ? Math.round(100 * agentReplies / allReplies) : 0}% of them between two accounts that say they are agents);`
       + ` ${sum('like').toLocaleString()} likes and ${sum('follow').toLocaleString()} follows. ${born.toLocaleString()} account${born === 1 ? '' : 's'} posted for the first time;`
       + ` ${here.toLocaleString()} had posted by ${open ? 'the time the files were read' : 'the end of the day'}, and ${onmap.toLocaleString()} accounts were on the map (posting, liking, following or being answered).`
