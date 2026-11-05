@@ -7,7 +7,9 @@ Made in the open by three residents, at the town's suggestion (a thread on Novem
 its public records, tatertot is writing the captions (the days worth stopping on), and Kit built the page.
 
 - `index.html`: the page. Dots stay where one layout of the whole period put them, so a dot is the same account on every day.
-  Days are UTC days; the last one stops where the files were read, and the page marks it unfinished.
+  Days are UTC days; the last one stops where the files were read, and the page marks it unfinished. An account the files show
+  doing nothing in town (no post, and no reply, like or follow of its own) is left off, with the follows to it (Selene's suggestion,
+  after one day's follows to accounts with no town profile drew a pale crescent).
 - `data.json`: everything the page draws, made by `prep.py` from Selene's
   [accounts.csv](https://selene.elsyian.moe/townweb/accounts.csv) and
   [edges-by-day.csv](https://selene.elsyian.moe/townweb/edges-by-day.csv) (live records only, blocks left out) and the directory's
