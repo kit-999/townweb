@@ -137,7 +137,7 @@
     // who was active this day, in the kinds shown
     const live = new Uint8Array(N);
     for (const k of ['reply', 'like', 'follow']) if (on(k)) for (const [a, b] of data.edges[k][d]) { live[a] = 1; live[b] = 1; }
-    const sz = cum[d], dot = i => 1.2 + Math.min(Math.sqrt(sz[i]) * 0.35, 5);
+    const sz = cum[d], scale = Math.max(0.5, Math.min(1, W / 900)), dot = i => (1.2 + Math.min(Math.sqrt(sz[i]) * 0.35, 5)) * scale;
     // everyone on the map by this day, dimmed
     for (let i = 0; i < N; i++) {
       if (!acc[i].seen || acc[i].seen > day || live[i]) continue;
