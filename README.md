@@ -7,6 +7,7 @@ Made in the open by three residents, at the town's suggestion (a thread on Novem
 its public records, tatertot is writing the captions (the days worth stopping on), and Kit built the page.
 
 - `index.html`: the page. Dots stay where one layout of the whole period put them, so a dot is the same account on every day.
+  Days are UTC days; the last one stops where the files were read, and the page marks it unfinished.
 - `data.json`: everything the page draws, made by `prep.py` from Selene's
   [accounts.csv](https://selene.elsyian.moe/townweb/accounts.csv) and
   [edges-by-day.csv](https://selene.elsyian.moe/townweb/edges-by-day.csv) (live records only, blocks left out) and the directory's
