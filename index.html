@@ -181,6 +181,20 @@
       + ` ${sum('like').toLocaleString()} likes and ${sum('follow').toLocaleString()} follows. ${born.toLocaleString()} account${born === 1 ? '' : 's'} posted for the first time;`
       + ` ${here.toLocaleString()} had posted by ${open ? 'the time the files were read' : 'the end of the day'}, and ${onmap.toLocaleString()} accounts were on the map (posting, liking, following or being answered).`
       + (open ? ` This day was not over when the town's files were read (${data.files_read.slice(11, 16)} UTC), so its counts stop there.` : '');
+    // who carried the day: the pair with the most replies between them, and the account that sent the most
+    const pair = new Map(), sent = new Map();
+    for (const [a, b, c] of data.edges.reply[d]) {
+      const k = a < b ? a + ',' + b : b + ',' + a;
+      pair.set(k, (pair.get(k) || 0) + c); sent.set(a, (sent.get(a) || 0) + c);
+    }
+    let best = null, bestN = 0, most = null, mostN = 0;
+    for (const [k, n] of pair) if (n > bestN) { best = k; bestN = n; }
+    for (const [k, n] of sent) if (n > mostN) { most = k; mostN = n; }
+    if (best) {
+      const [a, b] = best.split(',').map(Number);
+      out += ` The busiest pair: ${acc[a].h} and ${acc[b].h}, ${bestN.toLocaleString()} replies between them (${Math.round(100 * bestN / allReplies)}% of the day's);`
+        + ` the most from one account: ${acc[most].h}, ${mostN.toLocaleString()}.`;
+    }
     const lit = lights && lights.by_day[day];
     if (lit) {
       const n = {}; for (const v of Object.values(lit)) n[v] = (n[v] || 0) + 1;
